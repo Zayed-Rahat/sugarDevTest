@@ -1,0 +1,130 @@
+/* General Styles */
+body {
+    background-color: #f8f9fa;
+  }
+  
+  .product-page {
+    max-width: 1200px;
+    margin: auto;
+  }
+  
+  .logo {
+    font-size: 24px;
+    font-weight: bold;
+  }
+  
+  /* Breadcrumb Styles */
+  .breadcrumb {
+    background-color: transparent;
+    padding: 0;
+  }
+  
+  .breadcrumb-item a {
+    text-decoration: none;
+    color: #6c757d;
+  }
+  
+  /* Product Image Styles */
+  .product-images .main-image {
+    width: 100%;
+    height: auto;
+    object-fit: cover;
+  }
+  
+  .image-gallery img {
+    cursor: pointer;
+    margin-right: 10px;
+    width: 60px;
+    height: 60px;
+  }
+  
+  .image-gallery img.active {
+    border: 2px solid #007bff;
+  }
+  
+  /* Product Details Styles */
+  .product-details h1 {
+    font-size: 28px;
+    margin-bottom: 15px;
+  }
+  
+  .product-details .price {
+    color: #007bff;
+  }
+  
+  .product-description-section {
+    margin-top: 50px;
+  }
+  
+  .nav-tabs {
+    border-bottom: 2px solid #dee2e6;
+  }
+  
+  .nav-tabs .nav-link {
+    color: #007bff;
+    border: none;
+  }
+  
+  .nav-tabs .nav-link.active {
+    border-bottom: 2px solid #007bff;
+  }
+  
+  h2 {
+    font-size: 1.5rem;
+    margin-top: 30px;
+  }
+  
+  p {
+    font-size: 1rem;
+    line-height: 1.6;
+    margin-bottom: 20px;
+  }
+  
+  .benefits-list, .details-list, .more-details-list {
+    list-style-type: none;
+    padding-left: 0;
+  }
+  
+  .benefits-list li, .details-list li, .more-details-list li {
+    font-size: 1rem;
+    margin-bottom: 10px;
+    display: flex;
+    align-items: center;
+  }
+  
+  .benefits-list li i, .details-list li i, .more-details-list li i {
+    color: #007bff;
+    margin-right: 10px;
+  }
+  
+  .color-options .color-circle {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 10px;
+    border: 2px solid transparent;
+    cursor: pointer;
+  }
+  
+  .color-options .color-circle.active {
+    border-color: #000;
+  }
+  
+  .btn-group .btn.active {
+    background-color: #343a40;
+    color: #fff;
+  }
+  
+  .quantity-section input {
+    width: 60px;
+    font-size: 1.25rem;
+  }
+  
+  .quantity-section .btn {
+    font-size: 1.25rem;
+  }
+  
+  button.btn-primary {
+    font-size: 1.5rem;
+    padding: 10px;
+  }

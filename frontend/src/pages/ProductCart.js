@@ -6,19 +6,19 @@ const ProductCart = ({
   show,
   handleClose,
   product,
-  quantity,
+  products,
   handleQuantityChange,
 }) => {
-  const [currentQuantity, setCurrentQuantity] = useState(quantity);
-  const [priceWithTax, setPriceWithTax] = useState(product.price);
+  const [currentQuantity, setCurrentQuantity] = useState(product.quantity);
+  const [priceWithTax, setPriceWithTax] = useState(0);
 
   useEffect(() => {
-    updatePrice(currentQuantity);
-  }, [currentQuantity]);
+    setCurrentQuantity(product.quantity)
+    updatePrice(product.quantity);
+  }, [product.quantity]);
 
   const updatePrice = (newQuantity) => {
-    const totalPriceWithTax = product.price * newQuantity;
-    // const totalPriceWithTax = priceBeforeTax * 1.25;
+    const totalPriceWithTax = product.price * newQuantity * 1.25;
     setPriceWithTax(totalPriceWithTax.toFixed(2));
   };
 
@@ -41,14 +41,14 @@ const ProductCart = ({
   const handleBuyNow = async () => {
     try {
       await axios.post(`${process.env.REACT_APP_API}/cart`, {
-        productId: product._id,
+        productId: products._id,
         quantity: currentQuantity,
         color: product.color,
         size: product.size,
       });
       alert("Purchase complete! Cart cleared.");
       setCurrentQuantity(1);
-      setPriceWithTax(product.price);
+      setPriceWithTax(product.price*1.25);
       handleClose();
     } catch (error) {
       console.error("Error processing purchase:", error);

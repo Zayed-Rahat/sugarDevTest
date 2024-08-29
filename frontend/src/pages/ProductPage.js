@@ -21,6 +21,12 @@ const ProductPage = () => {
     fetchProduct(id);
   }, [id]);
 
+  useEffect(() => {
+    if (product) {
+      updatePrice(quantity);
+    }
+  }, [quantity, product]);
+
   const fetchProduct = async (id) => {
     try {
       const response = await axios.get(
@@ -274,11 +280,12 @@ const ProductPage = () => {
         handleClose={() => setShowModal(false)}
         product={{
           name: product.name,
-          price: priceWithTax,
+          price: product.price,
           color: selectedColor,
           size: selectedSize,
+          quantity: quantity,
         }}
-        quantity={quantity}
+        products={product}
         handleQuantityChange={handleQuantityChange}
       />
     </div>

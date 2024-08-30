@@ -24,6 +24,18 @@ body {
     color: #6c757d;
   }
   
+
+  .cart-icon {
+    position: relative;
+    color: green;
+  }
+  
+  .cart-icon .badge {
+    font-size: 0.75rem;
+    padding: 0.5em;
+  }
+
+  
   /* Product Image Styles */
   .product-images .main-image {
     width: 100%;

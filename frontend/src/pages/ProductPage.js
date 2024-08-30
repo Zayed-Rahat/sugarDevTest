@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import "./ProductPage.css";
 import ProductCart from "./ProductCart";
+import { FaShoppingCart } from 'react-icons/fa';
 
 const ProductPage = () => {
   const [product, setProduct] = useState(null);
@@ -14,6 +15,7 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("Small");
   const [showModal, setShowModal] = useState(false);
+  
 
   const { id } = useParams();
 
@@ -74,7 +76,6 @@ const ProductPage = () => {
 
   const handleSizeChange = (size) => {
     setSelectedSize(size);
-    // setSize(size);
   };
 
   const updatePrice = (newQuantity) => {
@@ -86,7 +87,6 @@ const ProductPage = () => {
   const addToCart = async () => {
     try {
       setShowModal(true);
-      // setTotalPrice(calculateTotalPrice(product.price, quantity));
     } catch (error) {
       console.error("Error adding to cart:", error);
     }
@@ -96,17 +96,28 @@ const ProductPage = () => {
 
   return (
     <div className="product-page container mt-5">
-      <header className="mb-4">
-        <h1 className="logo">FashionHub</h1>
-      </header>
+  
+      <header className="mb-4 d-flex justify-content-between align-items-center">
+      <h1 className="logo">FashionHub</h1>
+      <Link 
+      onClick={() => setShowModal(true)}  
+      className="cart-icon position-relative">
+        <FaShoppingCart size={30} />
+        {quantity > 0 && (
+          <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
+            {quantity}
+          </span>
+        )}
+      </Link>
+    </header>
 
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
           <li className="breadcrumb-item">
-            <Link to="/">Home</Link>
+            <Link to="#">Home</Link>
           </li>
           <li className="breadcrumb-item">
-            <Link to="/category">{product.category}</Link>
+            <Link to="#">{product.category}</Link>
           </li>
           <li className="breadcrumb-item active" aria-current="page">
             {product.name}

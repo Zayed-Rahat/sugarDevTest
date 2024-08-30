@@ -3,8 +3,11 @@ const mongoose = require("mongoose");
 const morgan = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-// const { readdirSync } = require("fs");
 require("dotenv").config();
+
+// const Product = require("./models");
+// const CartItem = require("./models");
+
 
 // app
 const app = express();
@@ -44,13 +47,43 @@ const ProductSchema = new mongoose.Schema({
     category: String
   });
   
-  const CartItemSchema = new mongoose.Schema({
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
-    quantity: Number,
-    color: String,
-    size: String,
-    timestamp: Date
-  });
+const CartItemSchema = new mongoose.Schema({
+  productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product', required: true },
+  quantity: { type: Number, required: true },
+  color: { type: String, required: true },
+  size: { type: String, required: true },
+  timestamp: { 
+    type: Date, 
+    required: true, 
+    default: () => {
+      // Get the current UTC time
+      const now = new Date();
+      
+      // Calculate the Bangladesh Standard Time (BST) offset (UTC+6)
+      const bangladeshOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+
+      // Create a new Date object adjusted to Bangladesh time
+      return new Date(now.getTime() + bangladeshOffset);
+    }
+  // timestamp: { 
+  //   type: Date, 
+  //   required: true, 
+    
+  //   default: () => {
+  //     const bangladeshTime = new Date();
+  //     const bangladeshTimezone = 'Asia/Dhaka';
+  //     return new Date(new Intl.DateTimeFormat('en-US', { 
+  //       timeZone: bangladeshTimezone, 
+  //       year: 'numeric', 
+  //       month: '2-digit', 
+  //       day: '2-digit', 
+  //       hour: '2-digit', 
+  //       minute: '2-digit', 
+  //       second: '2-digit' 
+  //     }).format(bangladeshTime));
+  //   }
+  }
+});
   
 const Product = mongoose.model('Product', ProductSchema);
 const CartItem = mongoose.model('CartItem', CartItemSchema);

@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import "./ProductPage.css";
-import ProductCart from "./ProductCart";
 import { FaShoppingCart } from 'react-icons/fa';
+import { Modal, Button } from "react-bootstrap";
+import "./ProductPage.css";
 
 const ProductPage = () => {
   const [product, setProduct] = useState(null);
@@ -15,7 +14,7 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("Small");
   const [showModal, setShowModal] = useState(false);
-  
+  const [currentQuantity, setCurrentQuantity] = useState(1);
 
   const { id } = useParams();
 
@@ -51,14 +50,15 @@ const ProductPage = () => {
   const handleQuantityChange = (value) => {
     if (value >= 1) {
       setQuantity(value);
+      setCurrentQuantity(value);
       updatePrice(value);
-
     }
   };
 
   const handleIncrease = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
+    setCurrentQuantity(newQuantity);
     updatePrice(newQuantity);
   };
 
@@ -66,6 +66,7 @@ const ProductPage = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
+      setCurrentQuantity(newQuantity);
       updatePrice(newQuantity);
     }
   };
@@ -92,24 +93,39 @@ const ProductPage = () => {
     }
   };
 
+  const handleBuyNow = async () => {
+    try {
+      await axios.post(`${process.env.REACT_APP_API}/cart`, {
+        productId: product._id,
+        quantity: currentQuantity,
+        color: selectedColor,
+        size: selectedSize,
+      });
+      alert("Purchase complete! Cart cleared.");
+      setCurrentQuantity(1);
+      setPriceWithTax(product.price * 1.25);
+      setShowModal(false);
+      setQuantity(1);
+    } catch (error) {
+      console.error("Error processing purchase:", error);
+    }
+  };
+
   if (!product) return null;
 
   return (
     <div className="product-page container mt-5">
-  
       <header className="mb-4 d-flex justify-content-between align-items-center">
-      <h1 className="logo">FashionHub</h1>
-      <Link 
-      onClick={() => setShowModal(true)}  
-      className="cart-icon position-relative">
-        <FaShoppingCart size={30} />
-        {quantity > 0 && (
-          <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
-            {quantity}
-          </span>
-        )}
-      </Link>
-    </header>
+        <h1 className="logo">FashionHub</h1>
+        <Link onClick={() => setShowModal(true)} className="cart-icon position-relative">
+          <FaShoppingCart size={30} />
+          {quantity > 0 && (
+            <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
+              {quantity}
+            </span>
+          )}
+        </Link>
+      </header>
 
       <nav aria-label="breadcrumb">
         <ol className="breadcrumb">
@@ -286,19 +302,39 @@ const ProductPage = () => {
         </div>
       </div>
 
-      <ProductCart
-        show={showModal}
-        handleClose={() => setShowModal(false)}
-        product={{
-          name: product.name,
-          price: product.price,
-          color: selectedColor,
-          size: selectedSize,
-          quantity: quantity,
-        }}
-        products={product}
-        handleQuantityChange={handleQuantityChange}
-      />
+      <Modal show={showModal} onHide={() => setShowModal(false)}>
+      <Modal.Header closeButton>
+        <Modal.Title>Cart Summary</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+        <div className="d-flex justify-content-between align-items-center">
+          <div>
+            <h5>{product.name}</h5>
+            <p>Color: {selectedColor}</p>
+            <p>Size: {selectedSize}</p>
+          </div>
+          <div className="d-flex flex-column align-items-center">
+            <Button variant="outline-secondary" onClick={handleDecrease}>
+              -
+            </Button>
+            <span>{currentQuantity}</span>
+            <Button variant="outline-secondary" onClick={handleIncrease}>
+              +
+            </Button>
+          </div>
+        </div>
+        <div className="mt-4">
+          <h5>Total Price: ${priceWithTax}</h5>
+        </div>
+      </Modal.Body>
+        <Modal.Footer>
+          <Link to="#">
+            <Button variant="primary" onClick={handleBuyNow}>
+              Buy Now
+            </Button>
+          </Link>
+        </Modal.Footer>
+      </Modal>
     </div>
   );
 };

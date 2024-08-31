@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, Link } from "react-router-dom";
 import axios from "axios";
-import { FaShoppingCart } from 'react-icons/fa';
+import { FaShoppingCart } from "react-icons/fa";
 import { Modal, Button } from "react-bootstrap";
 import "./ProductPage.css";
 
@@ -114,13 +114,16 @@ const ProductPage = () => {
   if (!product) return null;
 
   return (
-    <div className="product-page container mt-5">
-      <header className="mb-4 d-flex justify-content-between align-items-center">
+    <div className="product-page container mt-3">
+      <header className="mb-2 d-flex justify-content-between align-items-center">
         <h1 className="logo">FashionHub</h1>
-        <Link onClick={() => setShowModal(true)} className="cart-icon position-relative">
+        <Link
+          onClick={() => setShowModal(true)}
+          className="cart-icon position-relative"
+        >
           <FaShoppingCart size={30} />
           {quantity > 0 && (
-            <span className="badge bg-danger position-absolute top-0 start-100 translate-middle">
+            <span className="badge bg-danger top-0 translate-middle">
               {quantity}
             </span>
           )}
@@ -141,13 +144,13 @@ const ProductPage = () => {
         </ol>
       </nav>
 
-      <div className="row">
-        <div className="col-md-6">
+     <div className="row">
+        <div className="col-md-6 p-0">
           <div className="product-images">
             <img
               src={images[currentImageIndex]}
               alt={product.name}
-              className="img-fluid rounded main-image"
+              className="rounded main-image"
             />
             <div className="image-gallery mt-3 d-flex justify-content-center">
               {images.map((image, index) => (
@@ -165,18 +168,26 @@ const ProductPage = () => {
           </div>
         </div>
 
-        <div className="col-md-6">
+        <div className="col-md-6 p-0">
           <div className="product-details">
-            <h1>{product.name}</h1>
-            <p className="price h3">${product.price.toFixed(2)}</p>
+            <h1 className="product-title">
+              {product.name}
+            </h1>
+            <p className="price h3">
+              <i className="fas fa-dollar-sign icon"></i>
+              {product.price.toFixed(2)}
+            </p>
             <div className="ratings mb-2">
-              <span className="badge bg-warning text-dark">4.8</span>
+              <span className="badge bg-warning text-dark">
+                <i className="fas fa-star icon"></i> 4.8
+              </span>
               <Link to="#reviews" className="ms-2 text-muted">
-                67 Reviews
+                <i className="fas fa-comment-alt icon"></i> 67 Reviews
               </Link>
             </div>
             <p className="text-success">
-              93% of buyers have recommended this product.
+              <i className="fas fa-thumbs-up icon"></i> 93% of buyers have
+              recommended this product.
             </p>
 
             <div className="mt-4">
@@ -197,7 +208,7 @@ const ProductPage = () => {
 
             <div className="mt-4">
               <h4>Choose a Size</h4>
-              <div className="btn-group" role="group">
+              <div className="btn-group size-options" role="group">
                 {product.sizes.map((size) => (
                   <button
                     key={size}
@@ -240,20 +251,16 @@ const ProductPage = () => {
                 </button>
               </div>
             </div>
-
-            <div className="price-with-tax mb-3 h4">
-              ${priceWithTax} Add To Cart
+            <div className="add-to-cart">
+              <button onClick={addToCart} className="add-to-cart-btn">
+                ${priceWithTax} Add to Cart
+              </button>
             </div>
-
-            <button onClick={addToCart} className="btn btn-primary w-100">
-              Add to Cart
-            </button>
           </div>
         </div>
-      </div>
+      </div> 
 
-      <div className="description mt-5">
-        <div className="product-description-section mt-5">
+      <div className="description mt-2">
           <ul className="nav nav-tabs" id="description-tab" role="tablist">
             <li className="nav-item" role="presentation">
               <button
@@ -299,41 +306,57 @@ const ProductPage = () => {
               </ul>
             </div>
           </div>
-        </div>
       </div>
 
-      <Modal show={showModal} onHide={() => setShowModal(false)}>
-      <Modal.Header closeButton>
-        <Modal.Title>Cart Summary</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-        <div className="d-flex justify-content-between align-items-center">
-          <div>
-            <h5>{product.name}</h5>
-            <p>Color: {selectedColor}</p>
-            <p>Size: {selectedSize}</p>
+      <Modal show={showModal} onHide={() => setShowModal(false)} centered>
+        <Modal.Body className="modal-body-custom">
+          <button
+            type="button"
+            className="close custom-close"
+            aria-label="Close"
+            onClick={() => setShowModal(false)}
+          >
+            <span aria-hidden="true">&times;</span>
+          </button>
+
+          <div className="modal-product-details">
+            <img
+              src={product.images[0]} // Assuming you have a product image URL
+              alt={product.name}
+              className="modal-product-image"
+            />
+            <div className="modal-product-info">
+              <h5 className="modal-product-name">{product.name}</h5>
+              <div className="modal-product-options">
+                <div
+                  className="modal-color-circle"
+                  style={{ backgroundColor: selectedColor }}
+                ></div>
+                <span className="modal-size-badge">{selectedSize}</span>
+              </div>
+            </div>
+            <div className="modal-quantity-controls">
+              <button className="modal-quantity-btn" onClick={handleDecrease}>
+                -
+              </button>
+              <span className="modal-quantity-number">{currentQuantity}</span>
+              <button className="modal-quantity-btn" onClick={handleIncrease}>
+                +
+              </button>
+            </div>
           </div>
-          <div className="d-flex flex-column align-items-center">
-            <Button variant="outline-secondary" onClick={handleDecrease}>
-              -
-            </Button>
-            <span>{currentQuantity}</span>
-            <Button variant="outline-secondary" onClick={handleIncrease}>
-              +
-            </Button>
-          </div>
-        </div>
-        <div className="mt-4">
+
+          {/* <div className="mt-4">
           <h5>Total Price: ${priceWithTax}</h5>
-        </div>
-      </Modal.Body>
-        <Modal.Footer>
-          <Link to="#">
-            <Button variant="primary" onClick={handleBuyNow}>
-              Buy Now
-            </Button>
-          </Link>
-        </Modal.Footer>
+        </div> */}
+          <div className="buy-now-container">
+            <Link to="#">
+              <button className="buy-now-btn" onClick={handleBuyNow}>
+                ${priceWithTax} Buy Now
+              </button>
+            </Link>
+          </div>
+        </Modal.Body>
       </Modal>
     </div>
   );

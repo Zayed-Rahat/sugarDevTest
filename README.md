@@ -1,10 +1,19 @@
-## Product Page & Modal handle
-- sugartaste test
+## Product Page & Modal handle (sugartaste test)
 
 
+### Screenshots
 
-## Screenshots
+Home Page
+![1](https://github.com/Zayed-Rahat/sugarDevTest/blob/main/SS/Homepage.png)
 
+Modal
+![2](https://github.com/Zayed-Rahat/sugarDevTest/blob/main/SS/Modal.png)
+
+Production Description
+![3](https://github.com/Zayed-Rahat/sugarDevTest/blob/main/SS/Description.png)
+
+Animation Button
+![4](https://github.com/Zayed-Rahat/sugarDevTest/blob/main/SS/AnimationButton.png)
 
 
 ## Tech Stack

@@ -2,10 +2,19 @@
 body {
   background-color: #ffffff;
 }
+h2 {
+  font-size: 1.5rem;
+  margin-top: 30px;
+}
+
+p {
+  font-size: 1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
 
 .product-page {
   max-width: 1200px;
-  /* margin: auto; */
 }
 
 .logo {
@@ -69,52 +78,38 @@ body {
   color: #007bff;
 }
 
-
-.nav-tabs {
-  border-bottom: 2px solid #dee2e6;
+.product-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #333;
 }
 
-.nav-tabs .nav-link {
-  color: #007bff;
-  border: none;
+.icon {
+  margin-right: 8px;
+  color: #155bb5;
 }
 
-.nav-tabs .nav-link.active {
-  border-bottom: 2px solid #007bff;
+.price {
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: #28a745;
 }
 
-h2 {
-  font-size: 1.5rem;
-  margin-top: 30px;
-}
-
-p {
+.ratings .badge {
   font-size: 1rem;
-  line-height: 1.6;
-  margin-bottom: 20px;
+  font-weight: 500;
 }
 
-.benefits-list,
-.details-list,
-.more-details-list {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.benefits-list li,
-.details-list li,
-.more-details-list li {
+.ratings a {
   font-size: 1rem;
-  margin-bottom: 10px;
-  display: flex;
-  align-items: center;
+  text-decoration: none;
+  color: #155bb5;
 }
 
-.benefits-list li i,
-.details-list li i,
-.more-details-list li i {
-  color: #007bff;
-  margin-right: 10px;
+.text-success {
+  font-size: 1rem;
+  font-weight: 500;
+  color: #28a745;
 }
 
 .color-options {
@@ -158,7 +153,8 @@ p {
   transform: scale(1.2);
 }
 
-.quantity-section .btn, .modal-quantity-btn {
+.quantity-section .btn,
+.modal-quantity-btn {
   font-size: 15px;
   width: 30px;
   height: 30px;
@@ -172,7 +168,8 @@ p {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-.quantity-section .btn:hover, .modal-quantity-btn:hover {
+.quantity-section .btn:hover,
+.modal-quantity-btn:hover {
   background-color: #1a73e8;
   transform: scale(1.1);
   color: white;
@@ -192,6 +189,8 @@ button.btn-primary {
   font-size: 1.5rem;
   padding: 10px;
 }
+
+/* Modal Section */
 
 .modal-body-custom {
   display: flex;
@@ -258,8 +257,7 @@ button.btn-primary {
   border-radius: 10px;
   padding: 5px 10px;
   font-weight: bold;
-  gap: 10px; 
-
+  gap: 10px;
 }
 .modal-quantity-controls {
   display: flex;
@@ -315,36 +313,38 @@ button.btn-primary {
   transform: scale(1.05);
 }
 
-.product-title {
-  font-size: 2rem;
-  font-weight: 700;
-  color: #333;
+.nav-tabs {
+  border-bottom: 2px solid #dee2e6;
 }
 
-.icon {
-  margin-right: 8px;
-  color: #155bb5;
+.nav-tabs .nav-link {
+  color: #007bff;
+  border: none;
 }
 
-.price {
-  font-size: 1.8rem;
-  font-weight: 600;
-  color: #28a745;
+.nav-tabs .nav-link.active {
+  border-bottom: 2px solid #007bff;
 }
 
-.ratings .badge {
+.benefits-list,
+.details-list,
+.more-details-list {
+  list-style-type: none;
+  padding-left: 0;
+}
+
+.benefits-list li,
+.details-list li,
+.more-details-list li {
   font-size: 1rem;
-  font-weight: 500;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
 }
 
-.ratings a {
-  font-size: 1rem;
-  text-decoration: none;
-  color: #155bb5;
-}
-
-.text-success {
-  font-size: 1rem;
-  font-weight: 500;
-  color: #28a745;
+.benefits-list li i,
+.details-list li i,
+.more-details-list li i {
+  color: #007bff;
+  margin-right: 10px;
 }

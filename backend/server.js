@@ -5,9 +5,6 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 require("dotenv").config();
 
-// const Product = require("./models");
-// const CartItem = require("./models");
-
 
 // app
 const app = express();
@@ -29,7 +26,7 @@ app.use(cors());
 
 app.get("/api", (req, res) => {
   res.json({
-    data: "hey you hit user API endpoint lol",
+    data: "hey you hit user API endpoint",
   });
 });
 
@@ -58,30 +55,11 @@ const CartItemSchema = new mongoose.Schema({
     default: () => {
       // Get the current UTC time
       const now = new Date();
-      
-      // Calculate the Bangladesh Standard Time (BST) offset (UTC+6)
-      const bangladeshOffset = 6 * 60 * 60 * 1000; // 6 hours in milliseconds
+      const bangladeshOffset = 6 * 60 * 60 * 1000; 
 
       // Create a new Date object adjusted to Bangladesh time
       return new Date(now.getTime() + bangladeshOffset);
     }
-  // timestamp: { 
-  //   type: Date, 
-  //   required: true, 
-    
-  //   default: () => {
-  //     const bangladeshTime = new Date();
-  //     const bangladeshTimezone = 'Asia/Dhaka';
-  //     return new Date(new Intl.DateTimeFormat('en-US', { 
-  //       timeZone: bangladeshTimezone, 
-  //       year: 'numeric', 
-  //       month: '2-digit', 
-  //       day: '2-digit', 
-  //       hour: '2-digit', 
-  //       minute: '2-digit', 
-  //       second: '2-digit' 
-  //     }).format(bangladeshTime));
-  //   }
   }
 });
   
@@ -109,27 +87,6 @@ app.post('/api/cart', async (req, res) => {
     }
   });
   
-app.put('/api/cart/:id', async (req, res) => {
-    try {
-      const cartItem = await CartItem.findByIdAndUpdate(
-        req.params.id,
-        { $set: { quantity: req.body.quantity } },
-        { new: true }
-      );
-      res.json({ cartItems: await CartItem.find().sort({ timestamp: -1 }).limit(100) });
-    } catch (error) {
-      res.status(404).json({ message: 'Cart item not found' });
-    }
-  });
-  
-app.delete('/api/cart/:id', async (req, res) => {
-    try {
-      await CartItem.findByIdAndDelete(req.params.id);
-      res.json({ message: 'Item removed from cart successfully' });
-    } catch (error) {
-      res.status(404).json({ message: 'Item not found in cart' });
-    }
-  });
 
 
 // port

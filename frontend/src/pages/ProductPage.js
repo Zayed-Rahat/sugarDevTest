@@ -14,7 +14,6 @@ const ProductPage = () => {
   const [selectedColor, setSelectedColor] = useState("");
   const [selectedSize, setSelectedSize] = useState("Small");
   const [showModal, setShowModal] = useState(false);
-  const [currentQuantity, setCurrentQuantity] = useState(1);
 
   const { id } = useParams();
 
@@ -50,7 +49,6 @@ const ProductPage = () => {
   const handleQuantityChange = (value) => {
     if (value >= 1) {
       setQuantity(value);
-      setCurrentQuantity(value);
       updatePrice(value);
     }
   };
@@ -58,7 +56,6 @@ const ProductPage = () => {
   const handleIncrease = () => {
     const newQuantity = quantity + 1;
     setQuantity(newQuantity);
-    setCurrentQuantity(newQuantity);
     updatePrice(newQuantity);
   };
 
@@ -66,7 +63,6 @@ const ProductPage = () => {
     if (quantity > 1) {
       const newQuantity = quantity - 1;
       setQuantity(newQuantity);
-      setCurrentQuantity(newQuantity);
       updatePrice(newQuantity);
     }
   };
@@ -97,12 +93,11 @@ const ProductPage = () => {
     try {
       await axios.post(`${process.env.REACT_APP_API}/cart`, {
         productId: product._id,
-        quantity: currentQuantity,
+        quantity: quantity,
         color: selectedColor,
         size: selectedSize,
       });
       alert("Purchase complete! Cart cleared.");
-      setCurrentQuantity(1);
       setPriceWithTax(product.price * 1.25);
       setShowModal(false);
       setQuantity(1);
@@ -144,7 +139,7 @@ const ProductPage = () => {
         </ol>
       </nav>
 
-     <div className="row">
+      <div className="row">
         <div className="col-md-6 p-0">
           <div className="product-images">
             <img
@@ -170,9 +165,7 @@ const ProductPage = () => {
 
         <div className="col-md-6 p-0">
           <div className="product-details">
-            <h1 className="product-title">
-              {product.name}
-            </h1>
+            <h1 className="product-title">{product.name}</h1>
             <p className="price h3">
               <i className="fas fa-dollar-sign icon"></i>
               {product.price.toFixed(2)}
@@ -258,54 +251,54 @@ const ProductPage = () => {
             </div>
           </div>
         </div>
-      </div> 
+      </div>
 
       <div className="description mt-2">
-          <ul className="nav nav-tabs" id="description-tab" role="tablist">
-            <li className="nav-item" role="presentation">
-              <button
-                className="nav-link active"
-                id="description-tab-btn"
-                data-bs-toggle="tab"
-                data-bs-target="#description"
-                type="button"
-                role="tab"
-                aria-controls="description"
-                aria-selected="true"
-              >
-                Description
-              </button>
-            </li>
-          </ul>
-          <div className="tab-content" id="description-tab-content">
-            <div
-              className="tab-pane fade show active"
-              id="description"
-              role="tabpanel"
-              aria-labelledby="description-tab-btn"
+        <ul className="nav nav-tabs" id="description-tab" role="tablist">
+          <li className="nav-item" role="presentation">
+            <button
+              className="nav-link active"
+              id="description-tab-btn"
+              data-bs-toggle="tab"
+              data-bs-target="#description"
+              type="button"
+              role="tab"
+              aria-controls="description"
+              aria-selected="true"
             >
-              <h2 className="mt-4">Product Description</h2>
-              <p>{product.description}</p>
+              Description
+            </button>
+          </li>
+        </ul>
+        <div className="tab-content" id="description-tab-content">
+          <div
+            className="tab-pane fade show active"
+            id="description"
+            role="tabpanel"
+            aria-labelledby="description-tab-btn"
+          >
+            <h2 className="mt-4">Product Description</h2>
+            <p>{product.description}</p>
 
-              <h2>Benefits</h2>
-              <ul className="benefits-list">
-                {product.benefits.map((benefit) => (
-                  <li key={benefit}>
-                    <i className="bi bi-check-circle-fill"></i> {benefit}
-                  </li>
-                ))}
-              </ul>
+            <h2>Benefits</h2>
+            <ul className="benefits-list">
+              {product.benefits.map((benefit) => (
+                <li key={benefit}>
+                  <i className="bi bi-check-circle-fill"></i> {benefit}
+                </li>
+              ))}
+            </ul>
 
-              <h2>Product Details</h2>
-              <ul className="details-list">
-                {product.details.map((detail, index) => (
-                  <li key={index}>
-                    <i className="bi bi-check-circle-fill"></i> {detail}
-                  </li>
-                ))}
-              </ul>
-            </div>
+            <h2>Product Details</h2>
+            <ul className="details-list">
+              {product.details.map((detail, index) => (
+                <li key={index}>
+                  <i className="bi bi-check-circle-fill"></i> {detail}
+                </li>
+              ))}
+            </ul>
           </div>
+        </div>
       </div>
 
       <Modal show={showModal} onHide={() => setShowModal(false)} centered>
@@ -339,16 +332,13 @@ const ProductPage = () => {
               <button className="modal-quantity-btn" onClick={handleDecrease}>
                 -
               </button>
-              <span className="modal-quantity-number">{currentQuantity}</span>
+              <span className="modal-quantity-number">{quantity}</span>
               <button className="modal-quantity-btn" onClick={handleIncrease}>
                 +
               </button>
             </div>
           </div>
 
-          {/* <div className="mt-4">
-          <h5>Total Price: ${priceWithTax}</h5>
-        </div> */}
           <div className="buy-now-container">
             <Link to="#">
               <button className="buy-now-btn" onClick={handleBuyNow}>

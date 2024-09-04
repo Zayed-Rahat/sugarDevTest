@@ -1,5 +1,13 @@
 ## Product Page & Modal handle (sugartaste test)
 
+git clone: https://github.com/Zayed-Rahat/sugarDevTest.git
+
+Backend Run
+
+- cd backend
+- npm install
+- npm start
+
 Frontend Run
 
 - cd frontend
@@ -9,11 +17,6 @@ Frontend Run
 Hit the this url
 - http://localhost:3000/products/66d1e463ceb7ee05bb0a245f
 
-Backend Run
-
-- cd backend
-- npm install
-- npm start
 
 ### Screenshots
 

@@ -1,5 +1,19 @@
 ## Product Page & Modal handle (sugartaste test)
 
+Frontend Run
+
+- cd frontend
+- npm install
+- npm start
+
+Hit the this url
+- http://localhost:3000/products/66d1e463ceb7ee05bb0a245f
+
+Backend Run
+
+- cd backend
+- npm install
+- npm start
 
 ### Screenshots
 
